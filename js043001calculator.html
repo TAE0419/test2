@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./reset.css">
+    <style>
+        @font-face {
+            font-family: 'maruminya';
+            src: url(./font/x12y12pxMaruMinyaHangul.ttf);
+        }
+        body{background-image: url('./image/pattern3.png'); background-repeat: repeat; background-size: 400px}
+        .topBox{
+            width: 450px;height: 150px;background: #36303b; background: radial-gradient(circle, rgba(54, 48, 59, 1) 0%, rgba(73, 62, 77, 1) 100%); font-family:'maruminya', sans-serif;
+            border-top-left-radius: 70px;  border-top-right-radius: 70px; box-shadow: 1px 5px 15px rgba(0,0,0,0.7);
+            margin-top: 100px; margin-left: 300px;  display: flex; justify-content: end; align-items: center; padding: 30px;
+        }
+        #dis{font-size: 48px; margin-right: 50px; color:rgb(221, 227, 255);
+            width: 350px;height: 100px; text-align: right;line-height: 100px;white-space: nowrap; overflow: hidden;}
+        .outBox{
+            width: 450px;background: #36303b; background: radial-gradient(circle, rgba(54, 48, 59, 1) 0%, rgba(73, 62, 77, 1) 100%); font-family:'maruminya', sans-serif;
+            display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap; padding: 30px;
+            border-bottom-left-radius: 70px;  border-bottom-right-radius: 70px; box-shadow: 1px 5px 15px rgba(0,0,0,0.7);
+            margin-left: 300px;
+        }
+        .box{
+            width: 85px;height: 85px;background: #e8f0ff; background: radial-gradient(circle, rgba(232, 240, 255, 1) 0%, rgba(204, 213, 255, 1) 61%); 
+            border-radius: 50%; box-shadow: 1px 5px 10px rgba(0,0,0,0.7);
+            display: flex; justify-content: center; align-items: center; color: rgb(76, 66, 77);
+            font-size: 40px; transition: all 0.1s;
+        }
+        .box:hover{color:rgb(255, 146, 246); transform: scale(0.95);}
+        .box1{
+            background: #eac9ff;
+            background: radial-gradient(circle, rgba(234, 201, 255, 1) 0%, rgba(232, 168, 245, 1) 90%);
+        }
+        .box2{
+            width: 180px;height: 85px;background: #bcd2f5;
+            background: radial-gradient(circle, rgba(188, 210, 245, 1) 0%, rgba(175, 177, 248, 1) 61%); border-radius: 50px;
+        }
+        .textBox{
+            position: absolute; left: 850px;top: 100px; 
+        }
+        .text1{
+            font-size: 40px; color:rgb(54, 55, 61);font-family: 'maruminya', sans-serif;
+        }
+        h1{ 
+            font-size: 150px; color:rgb(54, 55, 61);font-family: 'maruminya', sans-serif;
+        }
+        .text2{
+            font-size: 30px; color:rgb(227, 146, 243);font-family: 'maruminya', sans-serif; background-color: white;
+        }
+        .img{
+            width: 250px;height: 350px; position: absolute; right: 830px;bottom: 160px; 
+            background-image: url('./image/man2.png'); background-position: center; background-repeat: no-repeat;background-size: cover;
+            transition: all 1s;
+        }
+        .img:hover{rotate: 1080deg; transform: scale(0.5);}
+    </style>
+</head>
+<body>
+    <div class='topBox'><div id='dis'>0</div></div>
+    <div class="outBox">
+        <div class="box box2" data-num="clear">CLEAR</div>
+        <div class="box box1" data-num="+">+</div>
+        <div class="box box1" data-num="-">-</div>
+        <div class="box" data-num="7">7</div>
+        <div class="box" data-num="8">8</div>
+        <div class="box" data-num="9">9</div>
+        <div class="box box1" data-num="*">*</div>
+        <div class="box" data-num="4">4</div>
+        <div class="box" data-num="5">5</div>
+        <div class="box" data-num="6">6</div>
+        <div class="box box1" data-num="/">/</div>
+        <div class="box" data-num="1">1</div>
+        <div class="box" data-num="2">2</div>
+        <div class="box" data-num="3">3</div>
+        <div class="box box1" data-num="%">%</div>
+        <div class="box box1" data-num="b">b</div>
+        <div class="box" data-num="0">0</div>
+        <div class="box box2" data-num="=">=</div>
+    </div>
+    <div class="textBox"><p class="text1">TAE's</p><h1>Calculator</h1><p class="text2">&nbsp;portfolio of html / css / javascript</p></div>
+    <div class="img"></div>
+    <script>
+        const box = document.querySelectorAll('.box')
+        const dis = document.querySelector('#dis')
+
+        let expr = ''
+
+        box.forEach((item)=>{
+            item.addEventListener('click',()=>{
+                let v= item.dataset.num
+
+                if(v==='clear'){
+                    expr=''
+                    dis.innerHTML=0
+                    return
+                }else if(v==='b'){
+                    expr=expr.slice(0, -1)
+                    dis.innerHTML= expr ===''?0:expr
+                    return
+                }else if(v==='='){
+                    if(expr==='' || expr.endsWith('+') || expr.endsWith('-')){
+                        dis.innerHTML='error'
+                        expr=''
+                        return
+                    }
+
+                    expr=eval(expr)
+                    dis.innerHTML=Number(expr).toLocaleString()
+                    expr=String(expr)
+                    return
+                }
+
+                expr+=v
+                dis.innerHTML=expr
+                
+            })
+        })
+    </script>
+</body>
+</html>
